@@ -1,15 +1,19 @@
-FROM kurron/docker-azul-jdk-8-build:latest
+FROM azul/zulu-openjdk:17
 
-MAINTAINER Ron Kurr <kurr@kurron.org>
+MAINTAINER Andrew Ealovega <Andrew@Ealovega.dev>
 
-ENV IDEA_JDK /usr/lib/jvm/zulu-8-amd64
+ENV IDEA_JDK /usr/lib/jvm/zulu-17-amd64
 
-ENTRYPOINT ["/opt/idea-IU-173.4548.28/bin/idea.sh"]
+RUN useradd -ms /bin/bash powerless
+RUN echo 'powerless:1234' | chgpasswd
+RUN echo 'root:1234' | chgpasswd
+
+ENTRYPOINT ["/opt/idea-IC-212.5284.40/bin/idea.sh"]
 
 USER root
 
-ADD https://download.jetbrains.com/idea/ideaIU-2017.3.4.tar.gz /opt/idea.tar.gz
+ADD https://download.jetbrains.com/idea/ideaIC-2021.2.2.tar.gz /opt/idea.tar.gz
 
-RUN tar --extract --verbose --directory /opt --file /opt/idea.tar.gz && rm -rf /opt/idea-IU-173.4548.28/jre64 && rm -f /opt/idea.tar.gz
+RUN tar --extract --verbose --directory /opt --file /opt/idea.tar.gz && rm -f /opt/idea.tar.gz
 
 USER powerless

@@ -2,7 +2,7 @@
 
 # Launches IntelliJ IDEA inside a Docker container
 
-IMAGE=${1:-kurron/docker-intellij:latest}
+IMAGE=${1:-blar/intellij:latest}
 
 DOCKER_GROUP_ID=$(cut -d: -f3 < <(getent group docker))
 USER_ID=$(id -u $(whoami))
