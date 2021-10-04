@@ -24,6 +24,7 @@ CMD="docker run --detach=true \
                 --rm \
                 --tty \
                 --user=${USER_ID}:${GROUP_ID} \
+                --volume ${HOME}:${HOME}
                 --volume intellij_config:/home/powerless/.config/JetBrains/ \
                 --volume intellij_cache:/home/powerless/.cache/JetBrains/ \
                 --volume intellij_plugins:/home/powerless/.local/share/JetBrains/ \

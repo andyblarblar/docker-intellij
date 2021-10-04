@@ -35,5 +35,5 @@ USER powerless
 # Create IDE directories as the volume will create as root if not, causing the IDE to crash.
 RUN mkdir -p /home/powerless/.config/JetBrains/ && chown -R 1000 /home/powerless/.config/JetBrains/
 RUN mkdir -p /home/powerless/.cache/JetBrains/ && chown -R 1000 /home/powerless/.cache/JetBrains/
-RUN mkdir -p /home/powerless/.local/JetBrains/ && chown -R 1000 /home/powerless/.local/JetBrains/
+RUN mkdir -p /home/powerless/.local/share/JetBrains/ && chown -R 1000 /home/powerless/.local/share/JetBrains/
 RUN mkdir -p /home/powerless/.java/ && chown -R 1000 /home/powerless/.java/
