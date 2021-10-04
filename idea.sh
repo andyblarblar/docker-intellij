@@ -13,13 +13,8 @@ HOME_DIR=$(cut -d: -f6 < <(getent passwd ${USER_ID}))
 export DISPLAY=:0
 xhost +
 
-PULL="docker pull ${IMAGE}"
-echo ${PULL}
-${PULL}
-
 CMD="docker run --detach=true \
                 --group-add ${DOCKER_GROUP_ID} \
-                --env HOME=${HOME} \
                 --env DISPLAY=unix${DISPLAY} \
                 --interactive \
                 --name IntelliJ \
@@ -27,17 +22,16 @@ CMD="docker run --detach=true \
                 --rm \
                 --tty \
                 --user=${USER_ID}:${GROUP_ID} \
-                --volume $HOME:${HOME} \
+                --volume intellij_config:/home/powerless/.config/JetBrains/ \
+                --volume intellij_cache:/home/powerless/.cache/JetBrains/ \
+                --volume intellij_plugins:/home/powerless/.local/share/JetBrains/ \
                 --volume /tmp/.X11-unix:/tmp/.X11-unix \
                 --volume /var/run/docker.sock:/var/run/docker.sock \
-                --workdir ${HOME} \
                 ${IMAGE}"
 
-echo $CMD
 $CMD
 
-echo $CMD
-CONTAINER=$($CMD)
+CONTAINER=IntelliJ
 
 # Minor post-configuration
 docker exec --user=root -it $CONTAINER groupadd -g $DOCKER_GROUP_ID docker
