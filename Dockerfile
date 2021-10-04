@@ -36,3 +36,4 @@ USER powerless
 RUN mkdir -p /home/powerless/.config/JetBrains/ && chown -R 1000 /home/powerless/.config/JetBrains/
 RUN mkdir -p /home/powerless/.cache/JetBrains/ && chown -R 1000 /home/powerless/.cache/JetBrains/
 RUN mkdir -p /home/powerless/.local/JetBrains/ && chown -R 1000 /home/powerless/.local/JetBrains/
+RUN mkdir -p /home/powerless/.java/ && chown -R 1000 /home/powerless/.java/

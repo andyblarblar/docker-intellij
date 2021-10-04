@@ -1,8 +1,10 @@
 #!/bin/bash
 
-# Launches IntelliJ IDEA inside a Docker container
+# Launches a Jetbrains IDE in a docker container.
 
-IMAGE=${1:-blar/intellij:latest}
+CONTAINER=intellij
+
+IMAGE=${1:-blar/${CONTAINER}:latest}
 
 DOCKER_GROUP_ID=$(cut -d: -f3 < <(getent group docker))
 USER_ID=$(id -u $(whoami))
@@ -17,7 +19,7 @@ CMD="docker run --detach=true \
                 --group-add ${DOCKER_GROUP_ID} \
                 --env DISPLAY=unix${DISPLAY} \
                 --interactive \
-                --name IntelliJ \
+                --name ${CONTAINER} \
                 --net "host" \
                 --rm \
                 --tty \
@@ -25,13 +27,12 @@ CMD="docker run --detach=true \
                 --volume intellij_config:/home/powerless/.config/JetBrains/ \
                 --volume intellij_cache:/home/powerless/.cache/JetBrains/ \
                 --volume intellij_plugins:/home/powerless/.local/share/JetBrains/ \
+                --volume intellij_java:/home/powerless/.java/ \
                 --volume /tmp/.X11-unix:/tmp/.X11-unix \
                 --volume /var/run/docker.sock:/var/run/docker.sock \
                 ${IMAGE}"
 
 $CMD
-
-CONTAINER=IntelliJ
 
 # Minor post-configuration
 docker exec --user=root -it $CONTAINER groupadd -g $DOCKER_GROUP_ID docker
