@@ -1,3 +1,5 @@
+# This is the base dockerfile for all IDE images.
+
 FROM azul/zulu-openjdk:17
 
 MAINTAINER Andrew Ealovega <Andrew@Ealovega.dev>

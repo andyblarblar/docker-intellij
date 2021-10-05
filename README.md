@@ -1,31 +1,28 @@
 # Overview
-This project is a simple Docker image that runs [JetBrains IntelliJ IDE](http://www.jetbrains.com/).
+This repository contains a dockerfile capable of running any Jetbrains IDE internally, with gui on the host.
 
-# Prerequisites
-* a working [Docker](http://docker.io) engine
+The repository is split into folders containing a build script to build an image for each specific IDE, as well as a 
+script to run that container. 
 
-# Building
-Type `./buid.sh` to build the image.
+Each container does not fight docker's empherial design. Rather, it will install the IDE in the image layer, and then save
+the IDE's cache, configs, and plugins in docker volumes that are shared between all of the containers here. This means that you should be able to install new IDE versions and transfer just like normal. Your home directory will be mounted in it's normal place inside the 
+container.
 
-# Installation
-Docker will automatically install the newly built image into the cache.
+# Usage 
 
-# Tips and Tricks
+For example, to use clion:
 
-## Launching The Image
-`./test.sh` will launch the image allowing you to begin working on projects.  
+1. `cd clion`
 
-## Desktop Launcher
+2. `./build.sh`
 
-# Troubleshooting
+3. `./clion.sh`
 
-## X-Windows
-If the image complains that it cannot connect to your X server, simply run `xhost +` to allow the container to connect
-to your X server.
+Only the 3rd step needs to be used for as long as that IDE version needs to be used. If a new IDE version is being used,
+simply repeat this process. Your settings should transfer normally.
 
-# License and Credits
-This project is licensed under the [Apache License Version 2.0, January 2004](http://www.apache.org/licenses/).
+# Updates
 
-# List of Changes
-* upgrade to IDEA 2017.3.4
-* automatically detect and mount the user's home directory
+I will occasionally update this repository with up to date download links for each IDE, as it cannot be automated as far as I 
+can tell. Feel free to submit a PR with updated links if you ever need it personally and want to contribute. To do this, just
+change the JETBRAINS_IDE_URL variable in each build.sh.

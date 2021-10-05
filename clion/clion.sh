@@ -2,9 +2,12 @@
 
 # Launches a Jetbrains IDE in a docker container.
 
-CONTAINER=intellij
+CONTAINER=jetbrains_env
 
-IMAGE=${1:-blar/${CONTAINER}:latest}
+# Change this variable to change the ide used.
+IDE=clion
+
+IMAGE=${1:-blar/${CONTAINER}:${IDE}}
 
 DOCKER_GROUP_ID=$(cut -d: -f3 < <(getent group docker))
 USER_ID=$(id -u $(whoami))
@@ -19,7 +22,7 @@ CMD="docker run --detach=true \
                 --group-add ${DOCKER_GROUP_ID} \
                 --env DISPLAY=unix${DISPLAY} \
                 --interactive \
-                --name ${CONTAINER} \
+                --name ${CONTAINER}_${IDE} \
                 --net "host" \
                 --rm \
                 --tty \
@@ -36,6 +39,6 @@ CMD="docker run --detach=true \
 $CMD
 
 # Minor post-configuration
-docker exec --user=root -it $CONTAINER groupadd -g $DOCKER_GROUP_ID docker
+docker exec --user=root -it ${CONTAINER}_${IDE} groupadd -g $DOCKER_GROUP_ID docker
 
-docker attach $CONTAINER
+docker attach ${CONTAINER}_${IDE}
