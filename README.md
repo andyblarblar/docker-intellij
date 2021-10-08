@@ -4,7 +4,7 @@ This repository contains a dockerfile capable of running any Jetbrains IDE inter
 The repository is split into folders containing a build script to build an image for each specific IDE, as well as a 
 script to run that container. 
 
-Each container does not fight docker's empherial design. Rather, it will install the IDE in the image layer, and then save
+Each container does not fight docker's ephemeral design. Rather, it will install the IDE in the image layer, and then save
 the IDE's cache, configs, and plugins in docker volumes that are shared between all of the containers here. This means that you should be able to install new IDE versions and transfer just like normal. Your home directory will be mounted in it's normal place inside the 
 container.
 
